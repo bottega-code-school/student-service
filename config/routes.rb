@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post 'memipedia_user_token' => 'memipedia_user_token#create'
     resources :memipedia_users
     resources :memipedia_posts
+    resources :memipedia_queries, only: [:index]
     get :logged_in, to: 'memipedia_users#logged_in'
     resources :app_memipedia_users
     resources :app_memipedia_posts
