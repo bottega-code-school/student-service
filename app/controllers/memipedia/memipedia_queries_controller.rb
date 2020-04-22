@@ -3,9 +3,14 @@ class Memipedia::MemipediaQueriesController < MobileApplicationController
   include ClientFromSubdomainConcern
 
   def index
-    # TODO
     if @client
-      render json: @client.memipedia_posts.order(created_at: :desc)
+      if params[:query]
+        render json: @client
+                       .memipedia_posts
+                       .search_by_term(params[:query])
+      else
+        render json: { error_message: "A query is required" }
+      end
     else
       render json: { status: :unauthorized }
     end
