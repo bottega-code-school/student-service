@@ -21,6 +21,19 @@ Rails.application.routes.draw do
     delete 'delete-portfolio-blog-image/:id', to: 'portfolio_blog_images#destroy'
   end
 
+  # Portfolio Hook
+  namespace :portfolio_hook do
+    resources :portfolio_items, only: [:index, :show, :update, :create, :destroy]
+    delete 'delete-portfolio-image/:id', to: 'portfolio_item_images#destroy'
+    resources :portfolio_app_users
+    resources :portfolio_blogs
+    delete 'delete-portfolio-blog-image/:id', to: 'portfolio_blog_images#destroy'
+
+    ## JWT Auth
+    post 'user_token' => 'user_token#create'
+    resources :users
+  end
+
   # Ecom
   namespace :shop do
     resources :products
@@ -45,10 +58,6 @@ Rails.application.routes.draw do
   end
 
   # Application
-
-  ## JWT Auth
-  post 'user_token' => 'user_token#create'
-  resources :users
 
   ## Session Auth
   get 'registration-validations', to: 'clients#registration_validations'
