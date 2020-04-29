@@ -1,3 +1,3 @@
-class UserTokenController < Knock::AuthTokenController
+class PortfolioHook::UserTokenController < Knock::AuthTokenController
   skip_before_action :verify_authenticity_token
 end
