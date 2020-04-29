@@ -1,43 +1,35 @@
-class Portfolio::PortfolioItemsController < ApplicationController
+class PortfolioHook::PortfolioItemsController < PortfolioHookController
   before_action :set_portfolio_item, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_portfolio_user, only: [:update, :destroy, :create]
   include AuthenticationConcern
   include ClientFromSubdomainConcern
 
   def index
     if params[:order_by] && params[:direction]
-      @portfolio_items = @client.portfolio_items.order("#{params[:order_by]} #{params[:direction]}")
+      portfolio_items = @client.portfolio_items.order("#{params[:order_by]} #{params[:direction]}")
     else
-      @portfolio_items = @client.portfolio_items.order(id: :asc)
+      portfolio_items = @client.portfolio_items.order(id: :asc)
     end
 
-    if @portfolio_items.count == 0
-      @portfolio_items = [PortfolioItem.new]
+    if portfolio_items.count == 0
+      portfolio_items = [PortfolioItem.new]
     end
 
-    render json: @portfolio_items
+    render json: portfolio_items
   end
 
   def show
     render json: @portfolio_item
   end
 
-  # GET /portfolio_items/new
-  def new
-    @portfolio_item = PortfolioItem.new
-  end
-
-  # GET /portfolio_items/1/edit
-  def edit
-  end
-
   def create
     if @current_client && @current_client == @client
-      @portfolio_item = @client.portfolio_items.new(portfolio_item_params)
+      portfolio_item = @client.portfolio_items.new(portfolio_item_params)
 
-      if @portfolio_item.save
-        render json: @portfolio_item, status: :created
+      if portfolio_item.save
+        render json: portfolio_item, status: :created
       else
-        render json: @portfolio_item.errors, status: :unprocessable_entity
+        render json: portfolio_item.errors, status: :unprocessable_entity
       end
     else
       render json: { status: :unauthorized }
@@ -66,6 +58,7 @@ class Portfolio::PortfolioItemsController < ApplicationController
   end
 
   private
+
     def set_portfolio_item
       @portfolio_item = PortfolioItem.find(params[:id])
     end
