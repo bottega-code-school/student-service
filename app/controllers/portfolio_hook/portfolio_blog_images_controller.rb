@@ -1,4 +1,4 @@
-class PortfolioHook::PortfolioBlogImagesController < PorfolioHookController
+class PortfolioHook::PortfolioBlogImagesController < PortfolioHookController
   before_action :set_portfolio_blog, only: [:destroy]
   include AuthenticationConcern
 
