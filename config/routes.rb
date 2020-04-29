@@ -17,9 +17,6 @@ Rails.application.routes.draw do
     resources :portfolio_items, only: [:index, :show, :update, :create, :destroy]
     delete 'delete-portfolio-image/:id', to: 'portfolio_item_images#destroy'
     resources :portfolio_app_users
-    post 'portfolio_user_token' => 'portfolio_user_token#create'
-    resources :portfolio_users
-    get :logged_in, to: 'portfolio_users#logged_in'
     resources :portfolio_blogs
     delete 'delete-portfolio-blog-image/:id', to: 'portfolio_blog_images#destroy'
   end
@@ -48,15 +45,23 @@ Rails.application.routes.draw do
   end
 
   # Application
+
+  ## JWT Auth
+  post 'user_token' => 'user_token#create'
+  resources :users
+
+  ## Session Auth
+  get 'registration-validations', to: 'clients#registration_validations'
+  resources :sessions, only: [:create]
+  delete :logout, to: 'sessions#logout'
+  get :logged_in, to: 'sessions#logged_in'
+
+  ## Data
   resources :projects, only: [:index, :show]
   resources :project_tables
   resources :client_domains, only: [:index, :create, :destroy]
   resources :app_templates
   resources :clients
-  resources :sessions, only: [:create]
-  delete :logout, to: 'sessions#logout'
-  get :logged_in, to: 'sessions#logged_in'
   get 'get-client-applications', to: 'clients#get_client_applications'
-  get 'registration-validations', to: 'clients#registration_validations'
   root to: 'home#index'
 end
