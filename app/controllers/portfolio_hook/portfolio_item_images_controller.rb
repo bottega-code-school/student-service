@@ -1,5 +1,6 @@
-class Portfolio::PortfolioItemImagesController < ApplicationController
-  before_action :set_portfolio_item, only: [:destroy]
+class PortfolioHook::PortfolioItemImagesController < PortfolioHookController
+  before_action :set_portfolio_item
+  before_action :authenticate_portfolio_user
   include AuthenticationConcern
 
   def destroy
@@ -18,6 +19,7 @@ class Portfolio::PortfolioItemImagesController < ApplicationController
   end
 
   private
+
     def set_portfolio_item
       @portfolio_item = PortfolioItem.find(params[:id])
     end
