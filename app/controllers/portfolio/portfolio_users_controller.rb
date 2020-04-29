@@ -1,11 +1,11 @@
-class Memipedia::MemipediaUsersController < MobileApplicationController
-  before_action :authenticate_memipedia_user, only: [:update, :destroy, :logged_in]
+class Portfolio::PortfolioUsersController < MobileApplicationController
+  before_action :authenticate_portfolio_user, only: [:update, :destroy, :logged_in]
   before_action :authorize,                   only: [:update, :destroy]
   include ClientFromSubdomainConcern
 
   def create
     if @client
-      user = MemipediaUser.new(user_params)
+      user = PortfolioUser.new(user_params)
       user.client = @client
 
       if user.save
@@ -22,32 +22,11 @@ class Memipedia::MemipediaUsersController < MobileApplicationController
     end
   end
 
-  def update
-    # TODO
-    user = MemipediaUser.find(params[:id])
-
-    if user.update(user_params)
-      render json: user
-    else
-      render json: {
-        status: 422,
-        msg: 'ERROR_UPDATING'
-      }
-    end
-  end
-
   def logged_in
     if @client
-      render json: current_memipedia_user
+      render json: current_portfolio_user
     else
       render json: { status: :unauthorized }
-    end
-  end
-
-  def destroy
-    user = MemipediaUser.find(params[:id])
-    if user.destroy
-      render json: { status: 200, msg: 'User has been deleted.' }
     end
   end
 
@@ -62,6 +41,6 @@ class Memipedia::MemipediaUsersController < MobileApplicationController
   end
 
   def authorize
-    return_unauthorized unless current_memipedia_user && current_memipedia_user.can_modify_user?(params[:id])
+    return_unauthorized unless current_portfolio_user && current_portfolio_user.can_modify_user?(params[:id])
   end
 end
