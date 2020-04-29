@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     resources :portfolio_items, only: [:index, :show, :update, :create, :destroy]
     delete 'delete-portfolio-image/:id', to: 'portfolio_item_images#destroy'
     resources :portfolio_app_users
+    post 'portfolio_user_token' => 'portfolio_user_token#create'
+    resources :portfolio_users
+    get :logged_in, to: 'portfolio_users#logged_in'
     resources :portfolio_blogs
     delete 'delete-portfolio-blog-image/:id', to: 'portfolio_blog_images#destroy'
   end
