@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_184126) do
+ActiveRecord::Schema.define(version: 2020_04_29_185353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,8 @@ ActiveRecord::Schema.define(version: 2020_04_29_184126) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_portfolio_users_on_client_id"
   end
 
   create_table "project_tables", force: :cascade do |t|
@@ -230,5 +232,6 @@ ActiveRecord::Schema.define(version: 2020_04_29_184126) do
   add_foreign_key "portfolio_app_users", "clients"
   add_foreign_key "portfolio_blogs", "clients"
   add_foreign_key "portfolio_items", "clients"
+  add_foreign_key "portfolio_users", "clients"
   add_foreign_key "project_tables", "projects"
 end
