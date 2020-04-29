@@ -61,7 +61,7 @@ class Portfolio::AppPortfolioUsersController < ApplicationController
   end
 
   def devcamp_space_serializer client
-    users = client.memipedia_users
+    users = client.portfolio_users
 
     if users.any?
       users.map do |user|
