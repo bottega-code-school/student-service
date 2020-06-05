@@ -70,6 +70,8 @@ Rails.application.routes.draw do
   resources :client_domains, only: [:index, :create, :destroy]
   resources :app_templates
   resources :clients
+  post 'client_token' => 'client_token#create'
+  resources :auth_tokens
   get 'get-client-applications', to: 'clients#get_client_applications'
   root to: 'home#index'
 end
