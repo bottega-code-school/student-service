@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   resources :app_templates
   resources :clients
   post 'client_token' => 'client_token#create'
-  resources :auth_tokens
+  get :token_logged_in, to: "auth_tokens#logged_in"
   get 'get-client-applications', to: 'clients#get_client_applications'
   root to: 'home#index'
 end
