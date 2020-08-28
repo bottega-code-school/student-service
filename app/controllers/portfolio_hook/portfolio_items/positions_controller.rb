@@ -6,8 +6,8 @@ class PortfolioHook::PortfolioItems::PositionsController < PortfolioHookControll
 
   def update
     if @current_client && @portfolio_item.client == @current_client
-      if @portfolio_item.update(portfolio_item_params)
-        render json: @portfolio_item, status: :created
+      if @portfolio_item.update(position_position: params[:position])
+        render json: @portfolio_item, status: :updated
       else
         render json: @portfolio_item.errors, status: :unprocessable_entity
       end
