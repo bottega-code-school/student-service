@@ -4,6 +4,9 @@ class PortfolioItem < ApplicationRecord
   has_one_attached :banner_image
   has_one_attached :logo
 
+  include RankedModel
+  ranks :position, with_same: :client_id
+
   def thumb_image_url
     if self.thumb_image.attachment
       self.thumb_image.attachment.service_url
