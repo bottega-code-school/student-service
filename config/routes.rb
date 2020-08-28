@@ -23,7 +23,9 @@ Rails.application.routes.draw do
 
   # Portfolio Hook
   namespace :portfolio_hook do
-    resources :portfolio_items, only: [:index, :show, :update, :create, :destroy]
+    resources :portfolio_items do
+      resources :positions, only: [:update], controller: "portfolio_items/positions"
+    end
     delete 'delete-portfolio-image/:id', to: 'portfolio_item_images#destroy'
     resources :portfolio_blogs
     delete 'delete-portfolio-blog-image/:id', to: 'portfolio_blog_images#destroy'
