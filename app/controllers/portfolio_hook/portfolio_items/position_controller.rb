@@ -1,4 +1,4 @@
-class PortfolioHook::PortfolioItems::PositionsController < PortfolioHookController
+class PortfolioHook::PortfolioItems::PositionController < PortfolioHookController
   before_action :set_portfolio_item
   before_action :authenticate_portfolio_user
   include AuthenticationConcern
