@@ -1,6 +1,6 @@
 class PortfolioHook::PortfolioItems::PositionController < PortfolioHookController
   before_action :set_portfolio_item
-  before_action :authenticate_portfolio_user
+  before_action :authenticate_client
 
   def update
     puts "current_portfolio_user" * 100, current_portfolio_user.inspect, "current_portfolio_user" * 100
