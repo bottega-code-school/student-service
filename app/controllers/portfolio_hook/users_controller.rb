@@ -1,9 +1,10 @@
 class PortfolioHook::UsersController < PortfolioHookController
   before_action :authenticate_portfolio_user
-  include ClientFromSubdomainConcern
 
   def logged_in
-    if @client
+    puts "current_portfolio_user" * 100, current_portfolio_user.inspect
+
+    if current_portfolio_user
       render json: current_portfolio_user
     else
       render json: { status: :unauthorized }
